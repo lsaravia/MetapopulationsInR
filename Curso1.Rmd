@@ -1,0 +1,88 @@
+---
+title: "Metapopulation - 1"
+author: "L.A.S."
+date: "03/12/2014"
+output:
+  beamer_presentation:
+    incremental: yes
+  slidy_presentation:
+    duration: 60
+    incremental: yes
+---
+
+## Poblaciones
+
+* Los organismos de un mismo grupo o especie, que viven en la misma zona geográfica
+
+* ![](images/Mar_del_Plata_playa.jpg)
+
+* Y tienen la capacidad de entre-cruzamiento
+
+* Tradicionalmente vistas como aisladas
+
+    - Riesgo de extinción en función del tamaño
+    - Las pequeñas poblaciones son susceptibles a las fuerzas exógenas 
+    (depredación, parasitismo), estocasticidad (demográfica 
+    y del medio ambiente), y a la depresión endogámica
+
+## Las Poblaciones están conectadas
+
+
+* ![](images/ruta_2.jpg)
+
+## Metapoblaciones
+
+* Existe una estructura jerárquica en la naturaleza: 
+
+* ![](images/Hierarchy_nature06830.jpg)
+    
+    Las poblaciones son parte de redes de poblaciones conectadas por dispersión
+
+* Los paisajes pueden verse como redes de parches de habitats con poblaciones locales
+  
+    ![](images/SpatialEcology.png)
+
+* Algunas especies tienen distribuciones espaciales más continuas pero siempre hay una escala de agregación producida por:
+
+    - Comportamiento individual
+    - Dispersion limitada
+
+
+## Metapopulation & spatial ecology
+
+* La posición espacial de los individuos y poblaciones es importante
+    - Influye en la tasa de crecimiento 
+    - La dinámica de las interacciones: competencia, depredador-presa y huésped-parásito, mutualismos.
+
+* Es bastante obvio que la posición espacial es importante para especies sésiles, como las plantas. 
+
+(GRAFICO DE ORGANISMOS SESSILES)
+
+* Es menos obvio que la posición espacial es importante para especies móviles, que pueden un apareamiento mas o menos aleatorio (panmítica).
+
+* En especies de insectos las larvas son relativamente inmóviles y los adultos móviles. Las larvas tienen la mayoría de las interacciones y por lo que la distribución espacial de larvas influye en la dinámica  competitiva y depredador-presa.
+
+(LARVA VS ADULTO)
+
+* En algunas especies marinas las larvas suelen ser el estadío móvil y el adulto el sésil. 
+
+## Como pasamos de poblaciones panmíticas a metapoblaciones
+
+1. La dispersión puede no ocurrir en cada generación, los parches de microhábitat pueden tener poblaciones locales multigeneracionales.
+
+    * El factor importante es la longevidad del microhábitat en relación con la duración de la vida de los individuos.
+
+    * La dinámica de la metapoblación está determinada tanto por la estructura y la dinámica del entorno físico como por las propiedades de las especies.
+
+2. La segunda forma de moverse al dominio metapoblación desde las poblaciones locales panmícticas es ampliando la escala espacial: la mayoría de los organismos tienen poderes limitada de dispersión
+
+    * por lo tanto, hay una escala espacial a la cual la mayoría de las interacciones, incluyendo el apareamiento, se producen "dentro de las poblaciones", mientras que a grandes escalas espaciales, estas poblaciones locales están conectados por la migración y el flujo de genes.
+
+
+
+## Assingment 
+
+* Encontrar ejemplos de metapoblaciones relacionadas a mutualismos (polinización), competencia, predador-presa, parasitismo, conservación (riesgo de extinción) 
+
+
+
