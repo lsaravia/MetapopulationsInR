@@ -7,7 +7,7 @@
 
 **Fundamentación**:  
 
-La ecología de metapoblaciones se enfoca en el estudio de poblaciones desde un punto de vista espacial. Esta visión tiene importancia debido a que la perdida y fragmentación del hábitat son determinantes en el manejo y conservación de especies. En este enfoque el espacio geográfico puede ser tomado como una continuidad o como una entidad discreta, esto implica la formulación de distintos tipos de modelos que serán desarrollados en el curso. Durante el curso se realizarán análisis y simulaciones utilizando el lenguaje de programación R.
+La ecología de metapoblaciones se enfoca en el estudio de poblaciones desde un punto de vista espacial. Esta visión tiene importancia debido a que la perdida y fragmentación del hábitat son determinantes en el manejo y conservación de especies. En este enfoque el espacio geográfico puede ser tomado como una continuidad o como una entidad discreta, esto implica la formulación de distintos tipos de modelos que serán desarrollados en el curso. Durante el curso se realizará una introducción al lenguaje R, el cual se usará para análisis y simulaciones de modelos.
 
 ### Programa
 
