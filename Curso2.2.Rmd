@@ -13,200 +13,268 @@ output:
     pandoc_args: --latex-engine=xelatex
 ---
 
-## Un modelo mínimo de metapoblaciones: dos parches
+## El modelo clásico de metapoblaciones
 
-* $\dfrac{dn_1}{dt} = n_1 r_1 (1 - \frac{n_1}{k_1}) - \epsilon n_1 + \epsilon n_2$
+* [Levins R (1969) Some demographic and genetic consequences of environmental heterogeneity for biological control.](https://drive.google.com/file/d/0BzexxHVKtpiAc1NnMVY3ZUVSYms/view?usp=sharing)
 
-	$\dfrac{dn_2}{dt} = n_2 r_2 (1 - \frac{n_2}{k_2}) - \epsilon n_2 + \epsilon n_1$
+* Supuestos: tenemos una población distribuida en parches
 
-* Isolineas de crecimiento cero - Nullclines 
-	<center>
-	![](images/twoPatchNull.png)
-	</center>
+	+ La colonización y la extinción de los parches es lenta en comparación con el crecimiento dentro del parche; esto significa que los parches ocupados estarán cerca de la capacidad de carga.
 
-	+ Negro: isolínea $n_1$, azul:isolínea $n_2$. Las líneas de puntos son las capacidades de carga. 
+	+ La capacidad de carga promedio entre $v$ parches es $k$
 
-	+ Puesto que los tamaños de las poblaciones acopladas en equilibrio están dadas por la intersección de las líneas continuas, la dispersión hace que la abundancia en el parche de 1 sea menos de lo que ocurriría si existiera el parche en forma aislada, mientras que la abundancia en el parche 2 es mayor que ocurriría si existía el parche en forma aislada.
+	+ La colonización y la extinción no están relacionadas a las propiedades del parche, ni al tamaño de la población en el parche.  
 
-	+ Las flechas indican la dirección neta que la dinámica tomarán en las cuatro regiones delimitadas
-por las isolineas. Parámetros utilizados en este ejemplo son $r_1 = 1$, $r_2 = 2$, $k_1 = 500$,
-$k_2 = 300$, y $\epsilon= 1$.
+	+ $u$ es el numero de parches ocupados y $p=u/v$ la ocupación de los parches
 
-## Funciones en R
+	+ La extinción de la población por parche es $\gamma$, la tasa total de extinción es $\gamma u$
 
-+ Estructura de una función
+	+ La producción por parche de individuos que migran para colonizar otros parches es $m$
 
-	    nombre_de_f <- function(parametros=valorPorDefecto) {
-	    
-	    # Aca adentro va lo que hace la funcion
-	    
-	    return("resultado que devuelve la función")
-	    }
+		$\dfrac{du}{dt} = m u (1 - \dfrac{u}{v}) - \gamma u$
 
-	ver página 356 de libro de Henry
-    
-+ Es más facil calcular la trayectoria de las ecuaciones en tiempo discreto
+	+ Lo cual puede representarse en terminos de la ocupación (fracción de parches ocupados)
 
-    $n_1(t+1) = n_1 + n_1 r_1 (1 - \frac{n_1}{k_1}) - \epsilon n_1 + \epsilon n_2$
-  
-    $n_2(t+1) = n_2 + n_2 r_2 (1 - \frac{n_2}{k_2}) - \epsilon n_2 + \epsilon n_1$
+		$\dfrac{dp}{dt} = m p (1 - p) - \gamma p$
 
-	ver página 366 de Henry para integración de ODE usando deSolve
-  
-  		Patch2 <- function()
-  		{
-  			n[1] <- n[1] + n[1]*r[1]*(1 - n[1]/k[1]) - e + n[1] + e n[2]
-  			n[2] <- n[2] + n[2]*r[2]*(1 - n[2]/k[2]) - e + n[2] + e n[1]
-  		}
-  
-  faltan los parámetros
+	+ Igualando a 0 tenemos la ocupación en el equilibrio 
 
-  		Patch2 <- function(n,r,k,e)
-  		{
-  			n[1] <- n[1] + n[1]*r[1]*(1 - n[1]/k[1]) - e *n[1] + e*n[2]
-  			n[2] <- n[2] + n[2]*r[2]*(1 - n[2]/k[2]) - e *n[2] + e*n[1]
-  		}
+		$p^*=1-\gamma/m$
 
-  A probar si funciona!!!
 
-  		n <- Patch2( c(10,10), c(1,2),c(500,300),1)
-  		n
-      
-+ Cómo hacemos para que nos de una trayectoria en el tiempo
+	+ A menos que la extinción $\gamma=0$ nunca están todos los parches ocupados. Para que la metapoblación persista ($p^*>0$), debe ser $m >\gamma$.  
 
-	Si aún no lo hicieron, conviene crear un script!
+	+ Esto se observaba en el ejemplo de las mariposas
 
-    	Patch2 <- function(time,n,r,k,e)
-  		{
-	    	p1 <- numeric(time)
-	    	p2 <- numeric(time)
+		<center>
+		![](images/GlanFritC.png)
+    	</center>
 
+    + Este gráfico es compatible con las suposiciones?
+
+## Hagamos una función en R!
+
++ Es más fácil que la anterior porque tiene que devolver una sola variable
+
+    ~~~~{#code .R} 
+		levins <- function(time,n,m,g)
+		{
+	    	p <- numeric(time)
+	    	p[1] <-n 
  	    	for(i in 2:time){
-    			p1[i] <- p1[i-1] + p1[i-1]*r[1]*(1 - p1[i-1]/k[1]) - e *p1[i-1] + e*p2[i-1]
-    			p2[i] <- p2[i-1] + p2[i-1]*r[2]*(1 - p2[i-1]/k[2]) - e *p2[i-1] + e*p2[i-1]
-    		}
-      	}
+    			p[i] <- p[i-1] + m*p[i-1]*(1-p[i-1]) - g *p[i-1]
+			}
+			return(p)
+		}
 
-+ La función debe devolver algo, le falta el return()
+		levins(100,.1,.6,.5)
+    ~~~~
 
-    	Patch2 <- function(time,n,r,k,e)
-  		{
-	    	p1 <- numeric(time)
-	    	p2 <- numeric(time)
++ Podemos hacer una función que calcule la dinámica con distintos valores del parámetro y cree un data.frame para graficar
 
- 	    	for(i in 2:time){
-    			p1[i] <- p1[i-1] + p1[i-1]*r[1]*(1 - p1[i-1]/k[1]) - e *p1[i-1] + e*p2[i-1]
-    			p2[i] <- p2[i-1] + p2[i-1]*r[2]*(1 - p2[i-1]/k[2]) - e *p2[i-1] + e*p2[i-1]
-    		}
-    	return(list(n1=p1,n2=p2))
-      	}
+	~~~~{#code .R} 
 
-		Patch2(100,c(10,10), c(1,2),c(500,300),1)
+	levins_gamma <- function(time,n,m,g)
+	{
+	# g debe ser un vector de dos componentes
+	dif <- seq(g[1],g[2],length.out=5)
 
-+ Ahora a encontrar el error!
+	#inicializamos un data.frame vacio
+	da <- data.frame()
 
-+ Falta inicializar las p's 
+	for(i in dif) {
+	  
+	  pp <- levins(time,n,m,i)
+	  
+	  # tenemos que hacer crecer el data.frame 
+	  
+	  da <- rbind(da,data.frame(time=1:time,pob=pp,gamma=dif))
+	}
+	return(da)
+	}
+	~~~~ 
 
-    	Patch2 <- function(time,n,r,k,e)
-  		{
-	    	p1 <- numeric(time)
-	    	p2 <- numeric(time)
-	    	p1[1] <- n[1]
-	    	p2[1] <- n[2]
++ Ejecutamos y graficamos
 
- 	    	for(i in 2:time){
-    			p1[i] <- p1[i-1] + p1[i-1]*r[1]*(1 - p1[i-1]/k[1]) - e *p1[i-1] + e*p2[i-1]
-    			p2[i] <- p2[i-1] + p2[i-1]*r[2]*(1 - p2[i-1]/k[2]) - e *p2[i-1] + e*p2[i-1]
-    		}
-    	return(list(n1=p1,n2=p2))
-      	}
+	~~~~{#code .R} 
 
-+ Prueben hacer un gráfico con plot
+	le <- levins_gamma(100,.1,.6,c(.5,.7))
 
-+ Una forma es:
-		
-		po <- Patch2(1000,c(10,10), c(1,2),c(500,300),1)
+	g <- ggplot(le,aes(time,pob,colour=as.factor(gamma))) + geom_point(size=1) + theme_bw()
 
-		plot(po2$n1,po2$n2)
+	g 
 
-		plot(po2$n1)
+	g + geom_line()
 
-		points(po2$n2)
+	g + geom_smooth()
+	~~~~
 
-+ Para usar ggplot hay que hacer un data.frame
++ Algo anda mal
 
-		da <- data.frame(time=1:1000,n1=po$n1,n2=po$n2)
+	~~~~{#code .R} 
 
-		g <- ggplot(da,aes(n1,n2)) + geom_point() 
+	head(le)
 
-    	g + theme_bw()
+	levins_gamma <- function(time,n,m,g)
+	{
+	dif <- seq(g[1],g[2],length.out=5)
 
-+ Para usar la potencia de ggplot hay que cambiar un poco la organización de los datos
+	da <- data.frame()
 
-	  	da <- data.frame(time=rep(1:1000,2),n=c(po$n1,po$n2),pob=rep(1:2,each=1000))
+	for(i in dif) {
+	  
+	  pp <- levins(time,n,m,i)
+	  
+	da <- rbind(da,data.frame(time=1:time,pob=pp,gamma=i))
+	}
+	return(da)
+	}
+	~~~~
 
-	    g <- ggplot(da,aes(time,n,colour=as.factor(pob))) + geom_point(size=1) 
-
-	    g + theme_bw()
-
-+ que tal si nos quedamos con los últimos 100 puntos
-
-	    da <- da[da$time>=900,]
-
-	    g <- ggplot(da,aes(time,n,colour=as.factor(pob))) + geom_point(size=1) + theme_bw()
-
-	    g 
-
-	    g + geom_line()
-
-	    g + geom_smooth()
-
-+ que tal si aumentamos los r's, y de paso cambiamos la función para que devuelva un data.frame
-    
-	    Patch2 <- function(time,n,r,k,e)
-	    {
-	      p1 <- numeric(time)
-		    p2 <- numeric(time)
-		    p1[1] <- n[1]
-		    p2[1] <- n[2]
-
-	 	    for(i in 2:time){
-	    	  p1[i] <- p1[i-1] + p1[i-1]*r[1]*(1 - p1[i-1]/k[1]) - e *p1[i-1] + e*p2[i-1]
-	    		p2[i] <- p2[i-1] + p2[i-1]*r[2]*(1 - p2[i-1]/k[2]) - e *p2[i-1] + e*p2[i-1]
-	    	}
-	    	return(data.frame(time=rep(1:time,2),n=c(p1,p2),pob=rep(1:2,each=1000)))
-	    }
-    
-	    da <- Patch2(1000,c(10,10), c(2,2.3),c(500,300),1)
-
-	    da <- da[da$time>=900,]
-
-	    g <- ggplot(da,aes(time,n,colour=as.factor(pob))) + geom_point(size=1) + theme_bw()
-
-	    g 
-
-	    g + geom_line()
-
-	    g + geom_smooth()
-
-
-## Cómo era eso de la pregunta ecológica/biológica?
-
-1. Cuales son los supuestos del modelo?
-
-    $n_1(t+1) = n_1 + n_1 r_1 (1 - \frac{n_1}{k_1}) - \epsilon n_1 + \epsilon n_2$
+	Volvemos a ejecutar
   
-    $n_2(t+1) = n_2 + n_2 r_2 (1 - \frac{n_2}{k_2}) - \epsilon n_2 + \epsilon n_1$
+	~~~~{#code .R} 
+
+	le <- levins_gamma(100,.1,.6,c(.5,.7))
+
+	head(le)
+
+	# parece que anda bien
+
+	g <- ggplot(le,aes(time,pob,colour=as.factor(gamma))) + geom_point(size=1) + theme_bw()
+
+	g 
+
+	g + geom_line()
+
+	~~~~
+
+
+## Para que sea más divertido podemos agregarle estocacidad
+
++ Esto relaciona los datos de campo/experimentales con el modelo
+
++ Hay básicamente dos formas (después vemos la tercera)
+
+	+ Error de observación: no podemos contar todos los individuos en una población, en general se trabaja con muestras. Si asumimos que tenemos una probabilidad $q$ de contar cada individuo eso nos lleva a una distribución binomial (página 168 libro de Bolker) 
+
+		$u(t+1) = m u(t) (1 - \dfrac{u(t)}{v}) - \gamma u(t)$
+
+		$u_{obs}(t) \sim Binomial(u(t),q)$
+
++ Hagamos el código para el error de observación
+
+	~~~~{#code .R} 
+
+	levins_obs <- function(time,n,m,g,q)
+	{
+		v <- 1000
+		p <- numeric(time)
+	    pObs <- numeric(time)
+
+		p[1] <-n
+	    pObs[1] <- rbinom(1,round(p[1]),q)
+	    	
+		for(i in 2:time){
+			p[i] <- p[i-1] + m*p[i-1]*(1-p[i-1]/v) - g *p[i-1]
+	  
+	  		pObs[i] <- rbinom(1,round(p[i]),q)
+		}
+
+		return(list(pob=p,pObs=pObs))
+	}
+
+	# Ojo acá tenemos que pasar el n inicial como número de individuos
+
+	levins_obs(100,10,.6,.5,0.8)
+	~~~~
+
++ Para completar el asunto hagamos la función para graficar
+
+	~~~~{#code .R} 
+
+	levinsObs_gamma <- function(time,n,m,g,q)
+	{
+		dif <- seq(g[1],g[2],length.out=5)
+
+		da <- data.frame()
+
+		for(i in dif) {
+		  
+		  pp <- levins_obs(time,n,m,i,q)
+		  
+		  da <- rbind(da,data.frame(time=1:time,pob=pp$pob,pObs=pp$pObs,gamma=i,q=q))
+		}
+		return(da)
+	}
+	~~~~ 
+
+	Simulamos 
   
-2. Qué preguntas nos podemos responder con este modelo?
+	~~~~{#code .R} 
 
-    + [Holt RD (1985) Population dynamics in two-patch environments: Some anomalous consequences of an optimal habitat distribution. ](https://drive.google.com/file/d/0BzexxHVKtpiAenJfRUJ5emkxMUU/view?usp=sharing)
+	le <- levinsObs_gamma(200,10,.6,c(.5,.7),.8)
 
-    	The effect of dispersal on population size and stability is explored for a population that disperses passively between two discrete habitat patches. Two basic models are considered. In the first model, a single population experiences density-dependent growth in both patches. A graphical construction is presented which allows one to determine the spatial pattern of abundance at equilibrium for most reasonable growth models and rates of dispersal. It is shown under rather general conditions that this equilibrium is unique and globally stable. In the second model, the dispersing population is a food-limited predator that occurs in both a source habitat (which contains a prey population) and a sink habitat (which does not). Passive dispersal between source and sink habitats can stabilize an otherwise unstable predator-prey interaction. The conditions allowing this are explored in some detail... 
+	head(le)
 
-    	Queda como lectura para la tarde.
+	g <- ggplot(le,aes(time,pob,colour=as.factor(gamma))) + geom_point(size=1) + theme_bw()
+
+	g 
+
+	g + geom_point(aes(time,pObs),shape=8,size=1)
+
+	~~~~
+
++ Si prueban cambiando el parámetro v=100 (dentro de la función), o el parametro q...
+
+
++ Nos falta ver el **Error de proceso**: el número de individuos fluctúa debido a factores estocásticos. Entonces suponemos una distribución de Poisson (página 171 de Bolker) 
+
+	$u(t+1) \sim Poisson(m u(t) (1 - \dfrac{u(t)}{v}) - \gamma u(t))$
+
+	$u_{obs}(t) = u(t)$
+
++ Hacemos la función para error de proceso:
+
+	~~~~{#code .R} 
+
+
+	# le agrego como parámetro la cantidad total de parches v
+	#
+	levins_pro <- function(time,n,m,g,v)
+	{
+		p <- numeric(time)
+	    #pObs <- numeric(time)
+
+		p[1] <-rpois(1,n)
+
+	    #pObs[1] <- rbinom(1,round(p[1]),q)
+	    	
+		for(i in 2:time){
+			p[i] <- rpois(1,p[i-1] + m*p[i-1]*(1-p[i-1]/v) - g *p[i-1])
+	  
+		}
+
+		return(p)
+	}
+
+	# Ojo acá tenemos que pasar el n inicial como número de individuos
+
+	levins_pro(100,10,.6,.5,1000)
+	~~~~
+
++ Para ver como cambia habría que comparar distintas simulaciones con los mismos parámetros
+
+    + Just do it!
+
+- Para algunas otras cosillas de simulación y estimación ver página 454 libro de Bolker.
+
+
+
 
 ## Referencias
+
+1. Levins R (1969) Some demographic and genetic consequences of environmental heterogeneity for biological control. Bull Entomol Soc Am 15: 237–240. <https://drive.google.com/file/d/0BzexxHVKtpiAc1NnMVY3ZUVSYms/view?usp=sharing>
 
 1. Harding KC, McNamara JM (2002) A unifying framework for metapopulation dynamics. Am Nat 160: 173–185. doi:10.1086/341014.
 

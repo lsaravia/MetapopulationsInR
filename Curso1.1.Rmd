@@ -95,7 +95,9 @@ output:
 * Se encuentra ampliamente distribuida en toda Europa y Asia, pero sólo reproduce
 en prados abiertos. 
 
-* En las islas Aland de Finlandia, la Glanville fritillary se encuentra sólo en pequeñas praderas que contienen una o ambas de las dos especies de plantas, Plantago lanceolata y Veronica spicata, que sirven como anfitriones a la mariposa en su etapa larval (Hanski, 2011).
+* En las islas Aland de Finlandia, la Glanville fritillary se encuentra sólo en pequeñas praderas que contienen una o ambas de las dos especies de plantas, Plantago lanceolata y Veronica spicata, que sirven como anfitriones a la mariposa en su etapa larval. 
+
+    [Hanski (2011) Eco-evolutionary spatial dynamics in the Glanville fritillary butterfly.](http://www.pnas.org/content/108/35/14397).
 
 
 * Debido al pequeño tamaño de estos prados, las poblaciones de la Glanville fritillary se extinguen de forma rutinaria

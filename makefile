@@ -1,6 +1,6 @@
-SRC = $(wildcard Curso2.1*)
+SRC = $(wildcard Curso2.2*)
 
-HTML=$(SRC:.md=.html)
+HTML=$(SRC:.Rmd=.html)
 
 all: $(HTML)
 
