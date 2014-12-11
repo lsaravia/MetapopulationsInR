@@ -1,7 +1,7 @@
 ---
 title: "Metapoblaciones - 1.2"
-author: "L.A.S."
-date: "03/12/2014"
+author: "L.A. Saravia"
+date: "12/2014"
 output:
   slidy_presentation:
     duration: 60
@@ -112,7 +112,7 @@ output:
 
 ## Funciones matemáticas
 
-+ R las funciones usuales
++ R tiene las funciones usuales
 
 		sin(1)  # trig functions
 
@@ -366,9 +366,9 @@ output:
 <http://www.noamross.net/blog/2012/10/5/ggplot-introduction.html>
 
 
-## Funciones
+## Tarea para el hogar
 
-	+ Hoy no, mañana...
+	+ Leer sobre Matrices y Factores en R de cualquiera de los libros de referencia
 
 
 ## Referencias
