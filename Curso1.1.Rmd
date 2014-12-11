@@ -1,10 +1,10 @@
 ---
-title: "Metapoblaciones - 1"
-author: "L.A.S."
-date: "03/12/2014"
+title: "Metapoblaciones - 1.1"
+author: "UNGS - L.A. Saravia"
+date: "12/2014"
 output:
   slidy_presentation:
-    duration: 60
+    duration: 180
     incremental: yes
   ioslides_presentation:
     incremental: yes
@@ -105,45 +105,32 @@ en prados abiertos.
 
 ## El hábitat de *Melitaea cinxia* 
 
-\begin{columns}[T]
-    \begin{column}{.5\textwidth}
-     {\includegraphics[width==\textwidth]{images/GlanFritMap.png}}
-    \end{column}
-    \begin{column}{.5\textwidth}
-    \begin{itemize} 
+* <center> 
+  ![](images/GlanFritMap.png) 
+  </center>
 
-    \item Mapa de la red de parches de hábitat en las islas Åland que indica la relativa abundancia de V. spicata en los prados (color más oscuro indica una mayor abundancia relativa de Verónica; valores promedio en 1993-2010). Sombreado gris muestra la tierra, y el resto es mar.
-     \end{itemize}
-     
-    \end{column}
-  \end{columns}
-
+   Mapa de la red de parches de hábitat en las islas Åland que indica la relativa abundancia de V. spicata en los prados (color más oscuro indica una mayor abundancia relativa de Verónica; valores promedio en 1993-2010). Sombreado gris muestra la tierra, y el resto es mar.
 
 ## Extinción y recolonización de *Melitaea cinxia*
 
-\begin{columns}[T]
-    \begin{column}{.4\textwidth}
-    \includegraphics[width=\textwidth]{images/GlanFrit.png}
-    \end{column}
-    \begin{column}{.6\textwidth}
-    \begin{itemize}
-
-    \item (A) Tamaño de Metapoblación a veces se cuantifica como el número de grupos de larvas
-            donde los prados pueden contener 1 a 150 grupos de larvas, cada uno de los cuales es el resultado de una sola nidada de huevos.
-
-    \item (B) Número de extinciones y colonizaciones entre ≈ 1.600 prados encuestados
-en 1993-2010. 
-
-    \item (C) Las extinciones y colonizaciones de (B) vs ocupación de parches para el mismo período.
+* ![](images/GlanFritA.png)
     
-    \end{itemize}
-     
-    \end{column}
-  \end{columns}
+    Tamaño de Metapoblación se cuantifica como el número de grupos de larvas
+    donde los prados pueden contener 1 a 150 grupos de larvas, cada uno de los cuales es el resultado de una sola nidada de huevos.
 
+* ![](images/GlanFritB.png)
+  
+    Número de extinciones y colonizaciones entre ≈ 1.600 prados encuestados entre 1993-2010. 
+
+* ![](images/GlanFritC.png)
+    
+    Las extinciones y colonizaciones de (B) vs ocupación de parches para el mismo período.
+    
 ## El proceso de modelación
 
-\centerline{\includegraphics[width=\textwidth]{images/ModelingProcess.png}}
+<center>
+![](images/ModelingProcess.png)
+</center> 
 
 ## Identificar la cuestión ecológica
 
